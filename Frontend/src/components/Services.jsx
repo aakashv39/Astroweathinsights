@@ -53,7 +53,7 @@ const Services = () => {
     ];
 
     return (
-        <section id="services" className="py-20 px-6 md:px-12 bg-white">
+        <section id="services" className="py-12 px-6 md:px-12 bg-white">
             <motion.div
                 initial="hidden"
                 whileInView="visible"

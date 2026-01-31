@@ -21,7 +21,7 @@ const Features = () => {
     const [selectedSign, setSelectedSign] = useState(null);
 
     return (
-        <section className="min-h-screen flex flex-col justify-center py-24 px-6 md:px-12 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10 border-t border-white/50 shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">
+        <section className="flex flex-col justify-center py-12 px-6 md:px-12 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10 border-t border-white/50 shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

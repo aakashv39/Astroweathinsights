@@ -86,7 +86,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="absolute top-0 left-0 w-full z-50 px-6 py-6 bg-white/10 backdrop-blur-sm shadow-sm transition-all duration-300">
+      <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-3 bg-white/80 backdrop-blur-md shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <a href="/" className="font-serif font-bold text-xl md:text-2xl text-slate-900 no-underline">
             AstroTech<span className="text-gold">Wealth</span>

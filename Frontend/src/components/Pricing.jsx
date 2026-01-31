@@ -135,7 +135,7 @@ const Pricing = () => {
 
 
     return (
-        <section className="min-h-screen flex flex-col justify-center py-24 px-6 md:px-12 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10">
+        <section className="flex flex-col justify-center py-12 px-6 md:px-12 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10">
             {/* Payment Status Toast */}
             {paymentStatus.show && (
                 <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideDown ${paymentStatus.success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
@@ -167,8 +167,8 @@ const Pricing = () => {
                         <motion.div
                             key={plan.name}
                             className={`relative bg-white rounded-3xl p-10 transition-all duration-300 flex flex-col text-left h-full group ${plan.locked
-                                    ? 'opacity-75 cursor-not-allowed'
-                                    : 'hover:-translate-y-2 hover:shadow-xl'
+                                ? 'opacity-75 cursor-not-allowed'
+                                : 'hover:-translate-y-2 hover:shadow-xl'
                                 } ${plan.popular
                                     ? 'border-2 border-amber-600 shadow-2xl shadow-amber-500/10 scale-100 lg:scale-105 z-10'
                                     : 'border border-slate-200 hover:border-amber-400'
@@ -209,10 +209,10 @@ const Pricing = () => {
                                 onClick={() => !plan.locked && handlePayment(plan.price, plan.name)}
                                 disabled={loadingPlan !== null || plan.locked}
                                 className={`w-full py-3 rounded-full font-semibold transition-all flex items-center justify-center gap-2 disabled:cursor-not-allowed ${plan.locked
-                                        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                                        : plan.popular
-                                            ? 'bg-gradient-to-r from-amber-500 to-amber-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'
-                                            : 'border-2 border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-500 bg-transparent'
+                                    ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                                    : plan.popular
+                                        ? 'bg-gradient-to-r from-amber-500 to-amber-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'
+                                        : 'border-2 border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-500 bg-transparent'
                                     }`}
                             >
                                 {plan.locked ? (
