@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Google Sans', 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-display: 'Oswald', sans-serif;
+
+  --color-gold: #d97706;
+  --color-gold-light: #fbbf24;
+  --color-gold-dark: #b45309;
+}
+
+@layer base {
+  body {
+    background-image: url('/bg-astrology.png');
+    @apply bg-cover bg-center bg-fixed bg-no-repeat text-slate-900 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}
+
+/* Custom Utilities for things that are complex to inline */
+@layer utilities {
+  .text-gold-gradient {
+    @apply bg-gradient-to-br from-gold-light to-gold bg-clip-text text-transparent;
+  }
+
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-md;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-full font-semibold shadow-lg transition-transform hover:-translate-y-0.5 hover:shadow-xl active:scale-95;
+  }
+}

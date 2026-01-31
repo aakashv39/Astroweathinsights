@@ -1,0 +1,235 @@
+.features-section {
+    padding: 6rem 2rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.features-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.features-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #fef3c7;
+    color: #d97706;
+    border-radius: 9999px;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.features-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.features-subtitle {
+    font-size: 1.125rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Zodiac Grid Layout */
+/* Zodiac Grid Layout */
+.zodiac-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.zodiac-item {
+    flex: 0 0 200px;
+    /* Fixed width to keep them uniform */
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.zodiac-item:hover {
+    border-color: #d97706;
+    box-shadow: 0 10px 20px -5px rgba(217, 119, 6, 0.15);
+}
+
+/* Zodiac Images/Icons */
+.zodiac-image-wrapper {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zodiac-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.zodiac-item:hover .zodiac-img {
+    transform: scale(1.1);
+}
+
+.card-icon-large {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(217, 119, 6, 0.1);
+    /* Light gold bg */
+    padding: 0.75rem;
+}
+
+.card-icon-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.zodiac-name {
+    display: none;
+    /* Hidden as requested since images have text */
+}
+
+/* Modal Styling */
+.detail-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    /* Keep background same (no darkening) */
+    backdrop-filter: blur(8px);
+    /* Increase blur slightly for focus */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-view {
+    width: 100%;
+    max-width: 700px;
+    /* Bigger modal */
+    position: relative;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 0;
+    /* Content padding is in feature-card */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* Close button inside modal */
+.close-modal-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #94a3b8;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: #d97706;
+}
+
+.feature-card.detail-card {
+    box-shadow: none;
+    /* Shadow handled by modal-view */
+    border: none;
+    padding: 3rem;
+    /* More padding inside the modal */
+}
+
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-title-group h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.card-description {
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.text-gold {
+    color: #d97706;
+}
