@@ -10,14 +10,27 @@ import schemas, auth, payment, database
 
 app = FastAPI()
 
-# CORS Origins - Allow all origins for deployment
-origins = ["*"]
+# CORS Origins - Allow specific origins for security
+origins = [
+    "https://astrotalkinsight.vercel.app",
+    "https://astrotalkinsight.com",
+    "http://astrotalkinsight.com",
+    "https://www.astrotalkinsight.com",
+    "http://www.astrotalkinsight.com",
+    # Local development
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
+]
 
 # Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=False,  # Must be False when using allow_origins=["*"]
+    allow_credentials=True,  # Allow credentials for JWT tokens
     allow_methods=["*"],
     allow_headers=["*"],
 )
