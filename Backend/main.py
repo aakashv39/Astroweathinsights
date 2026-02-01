@@ -10,21 +10,14 @@ import schemas, auth, payment, database
 
 app = FastAPI()
 
-# CORS Origins
-origins = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:5174",
-    "http://127.0.0.1:5175",
-]
+# CORS Origins - Allow all origins for deployment
+origins = ["*"]
 
 # Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
+    allow_credentials=False,  # Must be False when using allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
