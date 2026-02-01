@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .success {
+            border-left: 4px solid #4ade80;
+        }
+
+        .error {
+            border-left: 4px solid #f87171;
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 AstroTalk API Connection Test</h1>
+
+        <div class="info">
+            <strong>Backend URL:</strong> https://astrotalkinsight.onrender.com
+        </div>
+
+        <div>
+            <button onclick="testHealth()">Test Health Endpoint</button>
+            <button onclick="testRoot()">Test Root Endpoint</button>
+            <button onclick="testCORS()">Test CORS</button>
+        </div>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const API_URL = 'https://astrotalkinsight.onrender.com';
+        const resultDiv = document.getElementById('result');
+
+        function showResult(message, isSuccess = true) {
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result ' + (isSuccess ? 'success' : 'error');
+            resultDiv.textContent = message;
+        }
+
+        async function testHealth() {
+            try {
+                showResult('Testing /health endpoint...');
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                showResult(`✅ Success!\n\nStatus: ${response.status}\nResponse: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                showResult(`❌ Error!\n\n${error.message}`, false);
+            }
+        }
+
+        async function testRoot() {
+            try {
+                showResult('Testing / endpoint...');
+                const response = await fetch(`${API_URL}/`);
+                const data = await response.json();
+                showResult(`✅ Success!\n\nStatus: ${response.status}\nResponse: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                showResult(`❌ Error!\n\n${error.message}`, false);
+            }
+        }
+
+        async function testCORS() {
+            try {
+                showResult('Testing CORS configuration...');
+                const response = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const corsHeaders = {
+                    'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
+                    'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
+                    'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers'),
+                };
+
+                const data = await response.json();
+                showResult(`✅ CORS is working!\n\nStatus: ${response.status}\nCORS Headers:\n${JSON.stringify(corsHeaders, null, 2)}\n\nResponse: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                showResult(`❌ CORS Error!\n\n${error.message}\n\nThis likely means the backend hasn't been redeployed with the new CORS settings yet.`, false);
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            setTimeout(testHealth, 500);
+        });
+    </script>
+</body>
+
+</html>
