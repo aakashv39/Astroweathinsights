@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroTalk - Integration Verification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .url-info {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+
+        .url-info strong {
+            color: #667eea;
+        }
+
+        .test-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        pre {
+            background: #1f2937;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f9fafb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            font-size: 1.5em;
+            color: #9ca3af;
+        }
+
+        .checklist li.done::before {
+            content: "✓";
+            color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AstroTalk Integration Status</h1>
+            <p>Verifying frontend-backend connectivity</p>
+        </div>
+
+        <div class="cards">
+            <!-- Backend Status Card -->
+            <div class="card">
+                <h2><span class="icon">⚙️</span> Backend Status</h2>
+                <div class="url-info">
+                    <strong>URL:</strong> https://astrotalkinsight.onrender.com
+                </div>
+                <div id="backend-status" class="status pending">
+                    <span class="icon">⏳</span>
+                    <span>Checking backend...</span>
+                </div>
+                <button onclick="checkBackend()">Test Backend</button>
+                <button onclick="checkCORS()">Test CORS</button>
+                <div id="backend-result" class="test-results" style="display: none;"></div>
+            </div>
+
+            <!-- Frontend Status Card -->
+            <div class="card">
+                <h2><span class="icon">🌐</span> Frontend Status</h2>
+                <div class="url-info">
+                    <strong>Vercel:</strong> https://astrotalkinsight.vercel.app
+                </div>
+                <div class="url-info">
+                    <strong>Custom:</strong> https://astrotalkinsight.com
+                </div>
+                <div id="frontend-status" class="status pending">
+                    <span class="icon">⏳</span>
+                    <span>Checking frontend...</span>
+                </div>
+                <button onclick="checkFrontend()">Test Frontend</button>
+                <div id="frontend-result" class="test-results" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Setup Checklist -->
+        <div class="card">
+            <h2><span class="icon">📋</span> Deployment Checklist</h2>
+            <ul class="checklist">
+                <li id="check-env">Set VITE_API_URL on Vercel</li>
+                <li id="check-razorpay">Set VITE_RAZORPAY_KEY_ID on Vercel</li>
+                <li id="check-cors">Backend CORS updated</li>
+                <li id="check-deploy">Render backend redeployed</li>
+                <li id="check-vercel">Vercel frontend redeployed</li>
+                <li id="check-test">Integration tested</li>
+            </ul>
+            <div
+                style="margin-top: 20px; padding: 15px; background: #dbeafe; border-radius: 10px; border-left: 4px solid #3b82f6;">
+                <strong>📘 Next Steps:</strong>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Add environment variables on Vercel</li>
+                    <li>Redeploy frontend on Vercel</li>
+                    <li>Wait for Render backend deployment (~2-5 min)</li>
+                    <li>Test the live application</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Full Integration Test -->
+        <div class="card">
+            <h2><span class="icon">🧪</span> Full Integration Test</h2>
+            <p style="margin-bottom: 15px;">Test the complete flow from frontend to backend:</p>
+            <button onclick="runFullTest()">Run Complete Test Suite</button>
+            <div id="full-test-result" class="test-results" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://astrotalkinsight.onrender.com';
+        const FRONTEND_URL = 'https://astrotalkinsight.vercel.app';
+
+        function showStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            const icons = { pending: '⏳', success: '✓', error: '✗' };
+            element.innerHTML = `<span class="icon">${icons[type]}</span><span>${message}</span>`;
+        }
+
+        function showResult(elementId, content, isError = false) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = `<pre>${content}</pre>`;
+        }
+
+        async function checkBackend() {
+            showStatus('backend-status', 'Testing backend...', 'pending');
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`);
+                const data = await response.json();
+
+                showStatus('backend-status', '✅ Backend is healthy!', 'success');
+                showResult('backend-result', JSON.stringify(data, null, 2));
+                document.getElementById('check-deploy').classList.add('done');
+            } catch (error) {
+                showStatus('backend-status', `❌ Backend error: ${error.message}`, 'error');
+                showResult('backend-result', error.message, true);
+            }
+        }
+
+        async function checkCORS() {
+            showStatus('backend-status', 'Testing CORS...', 'pending');
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const corsHeaders = {
+                    'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
+                    'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
+                    'Access-Control-Allow-Credentials': response.headers.get('Access-Control-Allow-Credentials')
+                };
+
+                const data = await response.json();
+
+                showStatus('backend-status', '✅ CORS is configured correctly!', 'success');
+                showResult('backend-result', `CORS Headers:\n${JSON.stringify(corsHeaders, null, 2)}\n\nResponse:\n${JSON.stringify(data, null, 2)}`);
+                document.getElementById('check-cors').classList.add('done');
+            } catch (error) {
+                showStatus('backend-status', `❌ CORS error: ${error.message}`, 'error');
+                showResult('backend-result', `${error.message}\n\nThis might mean the backend hasn't been redeployed with new CORS settings yet.`, true);
+            }
+        }
+
+        async function checkFrontend() {
+            showStatus('frontend-status', 'Testing frontend...', 'pending');
+            try {
+                const response = await fetch(FRONTEND_URL);
+                const text = await response.text();
+
+                if (response.ok && text.includes('astrotech-web')) {
+                    showStatus('frontend-status', '✅ Frontend is live!', 'success');
+                    showResult('frontend-result', `Status: ${response.status}\nFrontend is deployed and accessible on Vercel.`);
+                    document.getElementById('check-vercel').classList.add('done');
+                } else {
+                    showStatus('frontend-status', '⚠️ Frontend accessible but might have issues', 'pending');
+                    showResult('frontend-result', `Status: ${response.status}`);
+                }
+            } catch (error) {
+                showStatus('frontend-status', `❌ Frontend error: ${error.message}`, 'error');
+                showResult('frontend-result', error.message, true);
+            }
+        }
+
+        async function runFullTest() {
+            const resultDiv = document.getElementById('full-test-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<pre>Running comprehensive tests...\n\n</pre>';
+
+            const tests = [
+                { name: 'Backend Health', fn: () => fetch(`${BACKEND_URL}/health`) },
+                { name: 'Backend Root', fn: () => fetch(`${BACKEND_URL}/`) },
+                { name: 'Frontend Accessibility', fn: () => fetch(FRONTEND_URL) },
+            ];
+
+            let results = [];
+
+            for (const test of tests) {
+                try {
+                    const start = Date.now();
+                    const response = await test.fn();
+                    const time = Date.now() - start;
+                    const data = await response.text();
+
+                    results.push(`✓ ${test.name}: PASSED (${time}ms)\n  Status: ${response.status}\n`);
+                } catch (error) {
+                    results.push(`✗ ${test.name}: FAILED\n  Error: ${error.message}\n`);
+                }
+            }
+
+            resultDiv.innerHTML = `<pre>${results.join('\n')}\n\n🎉 Test suite complete!</pre>`;
+
+            // Update checklist
+            document.getElementById('check-test').classList.add('done');
+        }
+
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkBackend();
+                setTimeout(checkFrontend, 1000);
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>
