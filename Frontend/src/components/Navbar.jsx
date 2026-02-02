@@ -206,21 +206,18 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-600 mb-1">Phone Number (India)</label>
+                    <label className="block text-sm font-medium text-slate-600 mb-1">Phone Number</label>
                     <div className="relative">
                       <Icon icon="ph:phone" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                       <input
                         type="tel"
                         placeholder="Enter your phone number"
-                        pattern="[\+]?91?[6-9][0-9]{9}"
-                        title="Please enter a valid Indian phone number (10 digits starting with 6-9)"
                         className="w-full border border-slate-300 rounded-lg pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         disabled={isLoading}
                       />
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">Format: +91 followed by 10 digits</p>
                   </div>
                 </>
               )}
