@@ -14,6 +14,7 @@ const Navbar = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -31,6 +32,7 @@ const Navbar = () => {
     setEmail('');
     setPassword('');
     setFullName('');
+    setPhoneNumber('');
     setError('');
     setSuccess('');
   };
@@ -53,7 +55,7 @@ const Navbar = () => {
           resetForm();
         }, 1000);
       } else {
-        await signup(email, password, fullName);
+        await signup(email, password, fullName, phoneNumber);
         setSuccess('Account created! Logging you in...');
         // Auto login after signup
         const data = await login(email, password);
@@ -187,21 +189,40 @@ const Navbar = () => {
 
             <form onSubmit={handleAuth} className="space-y-4">
               {authMode === 'signup' && (
-                <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1">Full Name</label>
-                  <div className="relative">
-                    <Icon icon="ph:user" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="text"
-                      required
-                      placeholder="Enter your full name"
-                      className="w-full border border-slate-300 rounded-lg pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      disabled={isLoading}
-                    />
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-600 mb-1">Full Name</label>
+                    <div className="relative">
+                      <Icon icon="ph:user" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Enter your full name"
+                        className="w-full border border-slate-300 rounded-lg pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        disabled={isLoading}
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-600 mb-1">Phone Number (India)</label>
+                    <div className="relative">
+                      <Icon icon="ph:phone" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                      <input
+                        type="tel"
+                        placeholder="Enter your phone number"
+                        pattern="[\+]?91?[6-9][0-9]{9}"
+                        title="Please enter a valid Indian phone number (10 digits starting with 6-9)"
+                        className="w-full border border-slate-300 rounded-lg pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        disabled={isLoading}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-500 mt-1">Format: +91 followed by 10 digits</p>
+                  </div>
+                </>
               )}
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-1">Email Address</label>

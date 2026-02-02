@@ -8,6 +8,7 @@ PyObjectId = Annotated[str, BeforeValidator(str)]
 class UserBase(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
+    phone_number: Optional[str] = None
 
 class UserCreate(UserBase):
     password: str

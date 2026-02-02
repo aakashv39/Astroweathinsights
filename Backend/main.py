@@ -54,10 +54,16 @@ async def health_check():
 @app.post("/signup", response_model=schemas.User)
 async def signup(user: schemas.UserCreate):
     try:
-        # Check if user already exists
+        # Check if user already exists by email
         db_user = await database.user_collection.find_one({"email": user.email})
         if db_user:
             raise HTTPException(status_code=400, detail="Email already registered")
+        
+        # Check if phone number already exists (if provided)
+        if user.phone_number:
+            db_user_phone = await database.user_collection.find_one({"phone_number": user.phone_number})
+            if db_user_phone:
+                raise HTTPException(status_code=400, detail="Phone number already registered")
         
         # Validate password length (bcrypt has 72-byte limit)
         if len(user.password) > 72:
@@ -85,7 +91,12 @@ async def signup(user: schemas.UserCreate):
 @app.post("/token", response_model=schemas.Token)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     try:
+        # Try to find user by email or phone number
         user = await database.user_collection.find_one({"email": form_data.username})
+        if not user:
+            # Try finding by phone number if email not found
+            user = await database.user_collection.find_one({"phone_number": form_data.username})
+        
         if not user or not auth.verify_password(form_data.password, user["hashed_password"]):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

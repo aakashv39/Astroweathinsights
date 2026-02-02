@@ -54,11 +54,12 @@ export const login = async (email, password) => {
     return response.data;
 };
 
-export const signup = async (email, password, fullName) => {
+export const signup = async (email, password, fullName, phoneNumber) => {
     const response = await api.post('/signup', {
         email,
         password,
         full_name: fullName,
+        phone_number: phoneNumber || null,
     });
     return response.data;
 };
