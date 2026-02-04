@@ -22,10 +22,10 @@ const Hero = () => {
     };
 
     return (
-        <section className="relative min-h-[85vh] flex items-center overflow-hidden px-6 md:px-20 pt-24 md:pt-0 pb-12 md:pb-8">
-            <div className="w-full max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16">
+        <section className="relative min-h-[85vh] flex items-center overflow-hidden px-6 md:px-12 lg:px-20 pt-24 lg:pt-0 pb-12 lg:pb-8">
+            <div className="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
                 <motion.div
-                    className="flex-1 max-w-full md:max-w-xl text-center md:text-left z-10"
+                    className="flex-1 max-w-full lg:max-w-xl text-center lg:text-left z-10"
                     initial="hidden"
                     animate="visible"
                     variants={staggerContainer}
@@ -33,11 +33,11 @@ const Hero = () => {
                     <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-serif font-black leading-[1.2] mb-4 text-slate-900">
                         Personalized Astrology Guidance for <span className="bg-gradient-to-br from-amber-400 to-amber-600 bg-clip-text text-transparent">Wealth, Career & Life</span>
                     </motion.h1>
-                    <motion.p className="text-base md:text-lg text-slate-600 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed" variants={fadeInUp}>
+                    <motion.p className="text-base md:text-lg text-slate-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed" variants={fadeInUp}>
                         Leveraging advanced algorithms and Vedic wisdom to provide precise financial and life path predictions. Experience the future of spiritual guidance.
                     </motion.p>
 
-                    <motion.div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-10" variants={fadeInUp}>
+                    <motion.div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10" variants={fadeInUp}>
                         <Link
                             to="/get-started"
                             className="bg-gradient-to-r from-amber-500 to-amber-700 text-white px-7 py-2.5 rounded-full font-semibold text-base shadow-lg shadow-amber-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all no-underline"
@@ -54,7 +54,7 @@ const Hero = () => {
                         </motion.button>
                     </motion.div>
 
-                    <motion.div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start" variants={fadeInUp}>
+                    <motion.div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start" variants={fadeInUp}>
                         <div className="flex -space-x-3">
                             {[1, 2, 3, 4].map((i) => (
                                 <img key={i} src={`https://i.pravatar.cc/100?img=${i}`} alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
