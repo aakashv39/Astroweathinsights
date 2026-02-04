@@ -135,7 +135,7 @@ const Pricing = () => {
 
 
     return (
-        <section className="flex flex-col justify-center py-12 px-6 md:px-12 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10">
+        <section className="flex flex-col justify-center py-12 px-6 md:px-20 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10">
             {/* Payment Status Toast */}
             {paymentStatus.show && (
                 <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideDown ${paymentStatus.success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'

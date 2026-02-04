@@ -13,10 +13,12 @@ app = FastAPI()
 # CORS Origins - Allow specific origins for security
 origins = [
     "https://astrotalkinsight.vercel.app",
+    "https://astrotechwealth.vercel.app",
     "https://astrotalkinsight.com",
     "http://astrotalkinsight.com",
     "https://www.astrotalkinsight.com",
     "http://www.astrotalkinsight.com",
+    "https://www.astrotechwealth.vercel.app",
     # Local development
     "http://localhost:5173",
     "http://localhost:5174",

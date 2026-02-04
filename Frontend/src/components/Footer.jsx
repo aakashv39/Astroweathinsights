@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <motion.footer
-            className="bg-white/80 backdrop-blur-xl border-t border-white/50 pt-24 pb-8 px-6 md:px-12"
+            className="bg-white/80 backdrop-blur-xl border-t border-white/50 pt-24 pb-8 px-6 md:px-20"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

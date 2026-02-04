@@ -21,7 +21,7 @@ const Features = () => {
     const [selectedSign, setSelectedSign] = useState(null);
 
     return (
-        <section className="relative py-20 px-6 md:px-12 bg-gradient-to-b from-white/20 to-amber-50/30 backdrop-blur-sm border-t border-white/40">
+        <section className="relative py-20 px-6 md:px-20 bg-gradient-to-b from-white/20 to-amber-50/30 backdrop-blur-sm border-t border-white/40">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +55,6 @@ const Features = () => {
                         className="group relative bg-white/60 backdrop-blur-md rounded-2xl p-6 cursor-pointer border border-white/50 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 hover:bg-white transition-all duration-300 flex flex-col items-center gap-4 overflow-hidden"
                         whileHover={{ y: -5 }}
                         onClick={() => setSelectedSign(sign)}
-                        layoutId={`card-${sign.name}`}
                     >
                         {/* Hover Gradient Background */}
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-500/0 group-hover:from-amber-500/5 group-hover:to-amber-500/10 transition-colors duration-300"></div>
@@ -75,80 +74,78 @@ const Features = () => {
             <AnimatePresence>
                 {selectedSign && (
                     <motion.div
-                        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+                        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        exit={{ opacity: 0, transition: { duration: 0.2 } }}
                         onClick={() => setSelectedSign(null)}
                     >
                         <motion.div
-                            className="w-full max-w-[600px] bg-white rounded-3xl overflow-hidden shadow-2xl relative flex flex-col"
-                            layoutId={`card-${selectedSign.name}`}
+                            className="w-full max-w-[600px] bg-white rounded-3xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]"
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Modal Header */}
-                            <div className="relative h-32 bg-gradient-to-r from-amber-500 to-amber-700 overflow-hidden shrink-0">
-                                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
-                                <Icon icon="ph:sparkle-fill" className="absolute top-4 right-16 text-white/20 text-6xl rotate-12" />
-                                <button
-                                    className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-2 rounded-full hover:bg-white/20"
-                                    onClick={() => setSelectedSign(null)}
-                                >
-                                    <Icon icon="ph:x-bold" className="text-2xl" />
-                                </button>
-                                <div className="absolute -bottom-10 left-8">
-                                    <div className="w-24 h-24 rounded-full bg-white p-2 shadow-lg">
-                                        <div className="w-full h-full rounded-full bg-amber-50 flex items-center justify-center">
-                                            <img src={selectedSign.img} alt={selectedSign.name} className="w-16 h-16 object-contain" />
+                            <div className="flex flex-col h-full overflow-y-auto">
+                                {/* Modal Header */}
+                                <div className="relative h-32 bg-gradient-to-r from-amber-500 to-amber-700 overflow-hidden shrink-0">
+                                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+                                    <Icon icon="ph:sparkle-fill" className="absolute top-4 right-16 text-white/20 text-6xl rotate-12" />
+                                    <button
+                                        className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-2 rounded-full hover:bg-white/20 z-10"
+                                        onClick={() => setSelectedSign(null)}
+                                    >
+                                        <Icon icon="ph:x-bold" className="text-2xl" />
+                                    </button>
+                                </div>
+
+                                {/* Modal Body */}
+                                <div className="pt-12 pb-8 px-8 flex-1 flex flex-col items-center text-center">
+                                    <div className="flex flex-col items-center gap-4 mb-8 w-full">
+                                        <div>
+                                            <h3 className="text-4xl font-serif font-bold text-slate-900 mb-1">{selectedSign.name}</h3>
+                                            <p className="text-base font-medium text-slate-500">{selectedSign.date}</p>
+                                        </div>
+                                        <div className="px-4 py-1.5 bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider rounded-full">
+                                            {selectedSign.element}
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-slate-50 rounded-xl p-5 border border-slate-100 mb-6">
+                                        <h4 className="flex items-center gap-2 font-serif font-bold text-slate-800 mb-3">
+                                            <Icon icon="ph:shooting-star-fill" className="text-amber-500" />
+                                            Today's Forecast
+                                        </h4>
+                                        <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                                            The stars align to bring {selectedSign.mood.toLowerCase()} energy to your financial endeavors.
+                                            {selectedSign.element === 'Fire' ? ' Use your natural drive to initiate new projects.' :
+                                                selectedSign.element === 'Earth' ? ' Consolidate your gains and plan for the long term.' :
+                                                    selectedSign.element === 'Air' ? ' Networking will reveal profitable opportunities.' :
+                                                        ' Trust your gut feeling on investment decisions.'}
+                                        </p>
+                                    </div>
+
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
+                                            <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Mood</div>
+                                            <div className="text-amber-600 font-serif font-bold">{selectedSign.mood}</div>
+                                        </div>
+                                        <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
+                                            <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Lucky No.</div>
+                                            <div className="text-amber-600 font-serif font-bold">{selectedSign.num}</div>
+                                        </div>
+                                        <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
+                                            <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Color</div>
+                                            <div className="text-amber-600 font-serif font-bold">{selectedSign.color}</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Modal Body */}
-                            <div className="pt-16 pb-8 px-8 flex-1">
-                                <div className="flex justify-between items-start mb-6">
-                                    <div>
-                                        <h3 className="text-3xl font-serif font-bold text-slate-900">{selectedSign.name}</h3>
-                                        <p className="text-sm font-medium text-slate-500">{selectedSign.date}</p>
-                                    </div>
-                                    <div className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold uppercase tracking-wider rounded-full">
-                                        {selectedSign.element}
-                                    </div>
+                                <div className="p-4 bg-slate-50 border-t border-slate-200 text-center shrink-0">
+                                    <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">AstroTech Wealth Analytics</p>
                                 </div>
-
-                                <div className="bg-slate-50 rounded-xl p-5 border border-slate-100 mb-6">
-                                    <h4 className="flex items-center gap-2 font-serif font-bold text-slate-800 mb-3">
-                                        <Icon icon="ph:shooting-star-fill" className="text-amber-500" />
-                                        Today's Forecast
-                                    </h4>
-                                    <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                                        The stars align to bring {selectedSign.mood.toLowerCase()} energy to your financial endeavors.
-                                        {selectedSign.element === 'Fire' ? ' Use your natural drive to initiate new projects.' :
-                                            selectedSign.element === 'Earth' ? ' Consolidate your gains and plan for the long term.' :
-                                                selectedSign.element === 'Air' ? ' Networking will reveal profitable opportunities.' :
-                                                    ' Trust your gut feeling on investment decisions.'}
-                                    </p>
-                                </div>
-
-                                <div className="grid grid-cols-3 gap-4">
-                                    <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
-                                        <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Mood</div>
-                                        <div className="text-amber-600 font-serif font-bold">{selectedSign.mood}</div>
-                                    </div>
-                                    <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
-                                        <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Lucky No.</div>
-                                        <div className="text-amber-600 font-serif font-bold">{selectedSign.num}</div>
-                                    </div>
-                                    <div className="text-center p-3 rounded-xl bg-white border border-slate-100 shadow-sm">
-                                        <div className="text-xs text-slate-400 uppercase font-bold tracking-wider mb-1">Color</div>
-                                        <div className="text-amber-600 font-serif font-bold">{selectedSign.color}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-4 bg-slate-50 border-t border-slate-200 text-center shrink-0">
-                                <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">AstroTech Wealth Analytics</p>
                             </div>
                         </motion.div>
                     </motion.div>

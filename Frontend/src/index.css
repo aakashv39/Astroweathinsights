@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+:root {
   --font-sans: 'Google Sans', 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', serif;
   --font-display: 'Oswald', sans-serif;
@@ -10,33 +10,55 @@
   --color-gold-dark: #b45309;
 }
 
-@layer base {
-  body {
-    background-image: url('/bg-astrology.png');
-    @apply bg-cover bg-center bg-fixed bg-no-repeat text-slate-900 font-sans antialiased;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif;
-  }
+body {
+  background-image: url('/bg-astrology.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #0f172a;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Utilities for things that are complex to inline */
-@layer utilities {
-  .text-gold-gradient {
-    @apply bg-gradient-to-br from-gold-light to-gold bg-clip-text text-transparent;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
 
-  .glass-panel {
-    @apply bg-white/40 backdrop-blur-md;
-  }
+/* Custom Utilities */
+.text-gold-gradient {
+  background: linear-gradient(to bottom right, var(--color-gold-light), var(--color-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
-  .btn-gold {
-    @apply bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-full font-semibold shadow-lg transition-transform hover:-translate-y-0.5 hover:shadow-xl active:scale-95;
-  }
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.btn-gold {
+  background: linear-gradient(to right, #f59e0b, #d97706);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 600;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 150ms ease-in-out, box-shadow 150ms ease-in-out;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.btn-gold:active {
+  transform: scale(0.95);
 }
