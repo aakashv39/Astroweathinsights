@@ -252,15 +252,29 @@ const BookConsultancy = () => {
 
     const stepTitles = ['Choose Type', 'Select Date', 'Select Time', 'Your Details', 'Confirmed'];
 
+    // Premium Input Styles
+    const inputClasses = "w-full bg-white/50 border border-slate-200 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400 font-medium text-slate-700 hover:bg-white/80";
+    const labelClasses = "block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest pl-1";
+
+    // Active State Classes
+    const activeCardClass = "border-amber-500 bg-amber-50 shadow-amber-100 ring-1 ring-amber-500/20";
+    const inactiveCardClass = "border-slate-100 bg-white hover:border-amber-300 hover:shadow-lg";
+
     return (
-        <div className="min-h-screen pt-32 pb-16 px-4 md:px-8 bg-white/40 backdrop-blur-md">
+        <div className="min-h-screen pt-32 pb-16 px-4 md:px-8 relative overflow-hidden bg-slate-50">
+            {/* Background Atmosphere */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-amber-200/20 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-indigo-200/20 rounded-full blur-[120px]"></div>
+            </div>
+
             {/* Payment Status Toast */}
             {paymentStatus.show && (
-                <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideDown ${paymentStatus.success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
+                <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideDown border ${paymentStatus.success ? 'bg-white border-green-100 text-green-700' : 'bg-white border-red-100 text-red-700'}`}>
                     <Icon icon={paymentStatus.success ? "ph:check-circle-fill" : "ph:warning-circle-fill"} className="text-2xl" />
-                    <span className="font-medium">{paymentStatus.message}</span>
-                    <button onClick={() => setPaymentStatus({ show: false, success: false, message: '' })} className="ml-2 hover:opacity-80">
-                        <Icon icon="ph:x" className="text-xl" />
+                    <span className="font-bold">{paymentStatus.message}</span>
+                    <button onClick={() => setPaymentStatus({ show: false, success: false, message: '' })} className="ml-2 opacity-50 hover:opacity-100">
+                        <Icon icon="ph:x-bold" />
                     </button>
                 </div>
             )}
@@ -268,77 +282,81 @@ const BookConsultancy = () => {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-5xl mx-auto"
+                className="max-w-5xl mx-auto relative z-10"
             >
                 {/* Header */}
-                <div className="text-center mb-10">
+                <div className="text-center mb-12">
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl"
+                        className="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-600 rounded-3xl rotate-3 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-amber-500/20"
                     >
-                        <Icon icon="ph:video-camera-fill" className="text-white text-4xl" />
+                        <Icon icon="ph:video-camera-fill" className="text-white text-4xl -rotate-3" />
                     </motion.div>
-                    <h1 className="text-3xl md:text-5xl font-serif font-bold text-slate-900 mb-3">
+                    <h1 className="text-4xl md:text-5xl font-serif font-black text-slate-900 mb-4 tracking-tight">
                         Book Expert Consultation
                     </h1>
-                    <p className="text-slate-600 max-w-lg mx-auto text-lg leading-relaxed">
-                        Get personalized astrological guidance via Google Meet with our experts.
+                    <p className="text-slate-500 max-w-lg mx-auto text-lg leading-relaxed">
+                        Get personalized astrological guidance via Google Meet with our renowned experts.
                     </p>
                 </div>
 
                 {/* Progress Steps */}
-                <div className="flex items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
-                    {stepTitles.slice(0, 4).map((title, idx) => (
-                        <div key={idx} className="flex items-center">
-                            <div className="flex flex-col items-center">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all shadow-md ${step > idx + 1
-                                    ? 'bg-green-500 text-white'
+                <div className="mb-12 relative px-4">
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -z-10 -translate-y-1/2 rounded-full hidden md:block"></div>
+                    <div className="flex justify-between max-w-3xl mx-auto">
+                        {stepTitles.map((title, idx) => (
+                            <div key={idx} className="flex flex-col items-center gap-3 bg-slate-50 px-2 group">
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-all duration-300 shadow-sm border-2 ${step > idx + 1
+                                    ? 'bg-green-500 border-green-500 text-white'
                                     : step === idx + 1
-                                        ? 'bg-amber-600 text-white'
-                                        : 'bg-white text-slate-400 border border-slate-200'
+                                        ? 'bg-amber-500 border-amber-500 text-white scale-110 shadow-amber-500/30'
+                                        : 'bg-white border-slate-200 text-slate-400'
                                     }`}>
                                     {step > idx + 1 ? <Icon icon="ph:check-bold" /> : idx + 1}
                                 </div>
-                                <span className={`text-xs mt-2 hidden md:block font-medium ${step === idx + 1 ? 'text-amber-700' : 'text-slate-400'}`}>
+                                <span className={`text-xs font-bold uppercase tracking-wider transition-colors ${step === idx + 1 ? 'text-amber-600' : 'text-slate-400'}`}>
                                     {title}
                                 </span>
                             </div>
-                            {idx < 3 && (
-                                <div className={`w-8 md:w-16 h-1 mx-1 rounded-full ${step > idx + 1 ? 'bg-green-500' : 'bg-slate-200'}`} />
-                            )}
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
-                {/* Step Content with Glass Effect */}
-                <div className="bg-white/80 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-8 md:p-12">
+                {/* Step Content */}
+                <div className="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] shadow-2xl p-6 md:p-12 overflow-hidden relative">
+
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -z-10"></div>
+
                     {/* Step 1: Choose Consultation Type */}
                     {step === 1 && (
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                         >
-                            <h2 className="text-2xl font-serif font-bold text-slate-800 mb-8 flex items-center gap-3">
-                                <span className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-base">
-                                    <Icon icon="ph:list-bullets-bold" />
-                                </span>
+                            <h2 className="text-2xl font-serif font-bold text-slate-900 mb-8 flex items-center gap-3">
+                                <Icon icon="ph:sparkle-fill" className="text-amber-500" />
                                 What would you like to discuss?
                             </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                                 {consultationTypes.map((type) => (
                                     <button
                                         key={type.id}
                                         onClick={() => handleTypeSelect(type)}
-                                        className="p-6 rounded-2xl border border-slate-100 bg-white hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all text-left group shadow-sm"
+                                        className={`p-6 rounded-2xl text-left group transition-all duration-300 relative overflow-hidden border ${inactiveCardClass}`}
                                     >
-                                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${type.color} flex items-center justify-center mb-4 group-hover:scale-110 shadow-lg transition-transform`}>
+                                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-slate-50 to-slate-100 rounded-bl-[4rem] -mr-4 -mt-4 transition-colors group-hover:from-amber-50 group-hover:to-amber-100"></div>
+
+                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${type.color} flex items-center justify-center mb-5 shadow-lg relative z-10 group-hover:scale-110 transition-transform duration-300`}>
                                             <Icon icon={type.icon} className="text-white text-2xl" />
                                         </div>
-                                        <h3 className="text-lg font-bold text-slate-800 mb-2 font-serif">{type.name}</h3>
-                                        <p className="text-sm text-slate-500 mb-3 leading-relaxed">{type.description}</p>
-                                        <div className="flex items-center gap-2 text-xs font-bold text-amber-600 uppercase tracking-wider">
-                                            <Icon icon="ph:timer-bold" />
+
+                                        <h3 className="text-lg font-bold text-slate-800 mb-2 font-serif relative z-10">{type.name}</h3>
+                                        <p className="text-sm text-slate-500 mb-4 leading-relaxed relative z-10">{type.description}</p>
+
+                                        <div className="flex items-center gap-2 text-xs font-bold text-amber-600 uppercase tracking-widest relative z-10">
+                                            <Icon icon="ph:clock-bold" />
                                             {type.duration}
                                         </div>
                                     </button>
@@ -355,41 +373,39 @@ const BookConsultancy = () => {
                         >
                             <button
                                 onClick={() => setStep(1)}
-                                className="flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-6 font-semibold group"
+                                className="flex items-center gap-2 text-slate-400 hover:text-slate-600 mb-8 font-bold text-sm uppercase tracking-wider group transition-colors"
                             >
                                 <Icon icon="ph:arrow-left-bold" className="group-hover:-translate-x-1 transition-transform" /> Back
                             </button>
 
-                            <div className="bg-amber-50 rounded-2xl p-6 mb-8 flex items-center gap-4 border border-amber-100">
-                                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${selectedType?.color} flex items-center justify-center shadow-lg`}>
-                                    <Icon icon={selectedType?.icon} className="text-white text-2xl" />
-                                </div>
-                                <div>
-                                    <div className="text-sm font-semibold text-amber-600 uppercase tracking-wider">Selected Consultation</div>
-                                    <div className="text-xl font-serif font-bold text-slate-800">{selectedType?.name}</div>
+                            <div className="bg-slate-50 rounded-2xl p-1 mb-10 inline-block border border-slate-100">
+                                <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
+                                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${selectedType?.color} flex items-center justify-center shadow-md`}>
+                                        <Icon icon={selectedType?.icon} className="text-white text-lg" />
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Session Type</div>
+                                        <div className="text-base font-serif font-bold text-slate-800">{selectedType?.name}</div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <h2 className="text-2xl font-serif font-bold text-slate-800 mb-8 flex items-center gap-3">
-                                <span className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-base">
-                                    <Icon icon="ph:calendar-bold" />
-                                </span>
-                                Choose a Date
-                            </h2>
-                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-4">
+                            <h2 className="text-2xl font-serif font-bold text-slate-900 mb-8">Choose a Date</h2>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
                                 {generateDates().map((date, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => handleDateSelect(date)}
-                                        className="p-4 rounded-2xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50 transition-all text-center group bg-white shadow-sm"
+                                        className="p-4 rounded-2xl border transition-all text-center group bg-white hover:border-amber-400 hover:shadow-lg hover:-translate-y-1 duration-300 border-slate-100"
                                     >
-                                        <div className="text-xs font-bold text-slate-400 group-hover:text-amber-600 uppercase tracking-tighter">
+                                        <div className="text-xs font-bold text-slate-400 group-hover:text-amber-600 uppercase tracking-tight mb-2">
                                             {date.toLocaleDateString('en-US', { weekday: 'short' })}
                                         </div>
-                                        <div className="text-2xl font-bold text-slate-800 group-hover:text-amber-600 my-1">
+                                        <div className="text-3xl font-black text-slate-800 group-hover:text-amber-600 mb-1 font-serif">
                                             {date.getDate()}
                                         </div>
-                                        <div className="text-xs font-medium text-slate-500">
+                                        <div className="text-xs font-medium text-slate-400 border-t border-slate-100 pt-2 mt-2 w-full">
                                             {date.toLocaleDateString('en-US', { month: 'short' })}
                                         </div>
                                     </button>
@@ -406,43 +422,32 @@ const BookConsultancy = () => {
                         >
                             <button
                                 onClick={() => setStep(2)}
-                                className="flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-6 font-semibold group"
+                                className="flex items-center gap-2 text-slate-400 hover:text-slate-600 mb-8 font-bold text-sm uppercase tracking-wider group transition-colors"
                             >
                                 <Icon icon="ph:arrow-left-bold" className="group-hover:-translate-x-1 transition-transform" /> Back
                             </button>
 
-                            <div className="bg-amber-50 rounded-2xl p-6 mb-8 border border-amber-100">
-                                <div className="flex flex-wrap gap-8">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${selectedType?.color} flex items-center justify-center shadow-md`}>
-                                            <Icon icon={selectedType?.icon} className="text-white text-xl" />
-                                        </div>
-                                        <span className="font-serif font-bold text-slate-800">{selectedType?.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-md">
-                                            <Icon icon="ph:calendar-fill" className="text-amber-600 text-xl" />
-                                        </div>
-                                        <span className="font-semibold text-slate-700">{formatFullDate(selectedDate)}</span>
-                                    </div>
+                            <div className="flex flex-wrap gap-4 mb-10">
+                                <div className="bg-white rounded-xl px-5 py-3 border border-slate-100 shadow-sm flex items-center gap-3">
+                                    <Icon icon="ph:briefcase-fill" className="text-amber-500 text-lg" />
+                                    <span className="font-bold text-slate-700">{selectedType?.name}</span>
+                                </div>
+                                <div className="bg-white rounded-xl px-5 py-3 border border-slate-100 shadow-sm flex items-center gap-3">
+                                    <Icon icon="ph:calendar-fill" className="text-amber-500 text-lg" />
+                                    <span className="font-bold text-slate-700">{selectedDate ? formatFullDate(selectedDate) : ''}</span>
                                 </div>
                             </div>
 
-                            <h2 className="text-2xl font-serif font-bold text-slate-800 mb-8 flex items-center gap-3">
-                                <span className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-base">
-                                    <Icon icon="ph:clock-bold" />
-                                </span>
-                                Choose a Time Slot
-                            </h2>
-                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <h2 className="text-2xl font-serif font-bold text-slate-900 mb-8">Available Time Slots</h2>
+                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                 {timeSlots.map((slot, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => slot.available && handleTimeSelect(slot.time)}
                                         disabled={!slot.available}
-                                        className={`p-5 rounded-2xl border-2 transition-all text-center font-bold glass-panel ${slot.available
-                                            ? 'border-slate-200 hover:border-amber-500 hover:bg-amber-50 text-slate-700 hover:text-amber-600'
-                                            : 'border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed'
+                                        className={`py-4 px-2 rounded-xl border-2 transition-all text-center font-bold text-sm ${slot.available
+                                            ? 'border-slate-100 bg-white text-slate-600 hover:border-amber-500 hover:text-amber-600 hover:shadow-md'
+                                            : 'border-transparent bg-slate-50 text-slate-300 cursor-not-allowed'
                                             }`}
                                     >
                                         {slot.time}
@@ -460,153 +465,133 @@ const BookConsultancy = () => {
                         >
                             <button
                                 onClick={() => setStep(3)}
-                                className="flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-6 font-semibold group"
+                                className="flex items-center gap-2 text-slate-400 hover:text-slate-600 mb-8 font-bold text-sm uppercase tracking-wider group transition-colors"
                             >
                                 <Icon icon="ph:arrow-left-bold" className="group-hover:-translate-x-1 transition-transform" /> Back
                             </button>
 
-                            {/* Booking Summary */}
-                            <div className="bg-gradient-to-r from-amber-500 to-amber-700 rounded-3xl p-8 mb-10 text-white shadow-xl relative overflow-hidden">
-                                <Icon icon="ph:confetti-fill" className="absolute -right-8 -bottom-8 text-white/10 text-[10rem] rotate-12" />
-                                <h3 className="text-xl font-serif font-bold mb-6 flex items-center gap-2">
-                                    <Icon icon="ph:receipt-bold" />
-                                    Booking Summary
-                                </h3>
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-                                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-                                        <div className="text-white/70 text-xs font-bold uppercase tracking-wider mb-1">Consultation</div>
-                                        <div className="font-bold truncate">{selectedType?.name}</div>
-                                    </div>
-                                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-                                        <div className="text-white/70 text-xs font-bold uppercase tracking-wider mb-1">Date</div>
-                                        <div className="font-bold truncate">{formatFullDate(selectedDate)}</div>
-                                    </div>
-                                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-                                        <div className="text-white/70 text-xs font-bold uppercase tracking-wider mb-1">Time</div>
-                                        <div className="font-bold truncate">{selectedTime}</div>
-                                    </div>
-                                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-                                        <div className="text-white/70 text-xs font-bold uppercase tracking-wider mb-1">Platform</div>
-                                        <div className="font-bold truncate flex items-center gap-1">
-                                            <Icon icon="ph:video-camera-fill" /> Meet
+                            <div className="grid lg:grid-cols-2 gap-12">
+                                {/* Form Column */}
+                                <div>
+                                    <h2 className="text-2xl font-serif font-bold text-slate-900 mb-6">Your Details</h2>
+                                    <div className="space-y-6">
+                                        <div className="group">
+                                            <label className={labelClasses}>Full Name</label>
+                                            <div className="relative">
+                                                <Icon icon="ph:user" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-amber-500 transition-colors" />
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleInputChange}
+                                                    className={inputClasses}
+                                                    placeholder="Enter your name"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="group">
+                                            <label className={labelClasses}>Email Address</label>
+                                            <div className="relative">
+                                                <Icon icon="ph:envelope" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-amber-500 transition-colors" />
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                    className={inputClasses}
+                                                    placeholder="you@email.com"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="group">
+                                            <label className={labelClasses}>Phone Number</label>
+                                            <div className="relative">
+                                                <Icon icon="ph:phone" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-amber-500 transition-colors" />
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    className={inputClasses}
+                                                    placeholder="+91..."
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="group">
+                                            <label className={labelClasses}>Topics to Discuss</label>
+                                            <textarea
+                                                name="questions"
+                                                value={formData.questions}
+                                                onChange={handleInputChange}
+                                                rows={3}
+                                                className={`${inputClasses} h-auto pt-4 resize-none`}
+                                                placeholder="Briefly describe what you'd like to ask..."
+                                            />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mt-8 pt-6 border-t border-white/20 flex justify-between items-center">
-                                    <span className="font-bold">Total Investment</span>
-                                    <span className="text-3xl font-black font-display">₹ {CONSULTATION_PRICE.toLocaleString()}</span>
-                                </div>
-                            </div>
 
-                            {/* Contact Form */}
-                            <h2 className="text-2xl font-serif font-bold text-slate-800 mb-8 flex items-center gap-3">
-                                <span className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-base">
-                                    <Icon icon="ph:user-bold" />
-                                </span>
-                                Your Information
-                            </h2>
-                            <div className="grid md:grid-cols-2 gap-6 mb-6">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-600 ml-1">Full Name *</label>
-                                    <div className="relative">
-                                        <Icon icon="ph:user" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            placeholder="Enter your name"
-                                            className="w-full border border-slate-200 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all shadow-sm"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-600 ml-1">Email *</label>
-                                    <div className="relative">
-                                        <Icon icon="ph:envelope" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            placeholder="you@example.com"
-                                            className="w-full border border-slate-200 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all shadow-sm"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-600 ml-1">Phone Number *</label>
-                                    <div className="relative">
-                                        <Icon icon="ph:phone" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}
-                                            placeholder="+91 XXXXX XXXXX"
-                                            className="w-full border border-slate-200 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all shadow-sm"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-600 ml-1">Preferred Language</label>
-                                    <div className="relative">
-                                        <Icon icon="ph:translate" className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                                        <select
-                                            name="topic"
-                                            value={formData.topic}
-                                            onChange={handleInputChange}
-                                            className="w-full border border-slate-200 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white shadow-sm appearance-none"
-                                        >
-                                            <option value="Hindi">Hindi</option>
-                                            <option value="English">English</option>
-                                            <option value="Hindi + English">Hindi + English</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mb-10 space-y-2">
-                                <label className="text-sm font-bold text-slate-600 ml-1">Specific Questions or Background</label>
-                                <textarea
-                                    name="questions"
-                                    value={formData.questions}
-                                    onChange={handleInputChange}
-                                    rows={4}
-                                    placeholder="Briefly describe what you'd like to gain from this session..."
-                                    className="w-full border border-slate-200 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none resize-none transition-all shadow-sm"
-                                />
-                            </div>
+                                {/* Summary Column */}
+                                <div>
+                                    <h2 className="text-2xl font-serif font-bold text-slate-900 mb-6">Order Summary</h2>
+                                    <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-2xl">
+                                        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
 
-                            {/* Pay Button */}
-                            <button
-                                onClick={handlePayment}
-                                disabled={isLoading}
-                                className="w-full btn-gold py-5 shadow-2xl flex items-center justify-center gap-4 text-xl group"
-                            >
-                                {isLoading ? (
-                                    <>
-                                        <Icon icon="ph:circle-notch" className="text-2xl animate-spin" />
-                                        Securing Transaction...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Icon icon="ph:credit-card-fill" className="text-2xl group-hover:rotate-12 transition-transform" />
-                                        Schedule & Pay ₹ {CONSULTATION_PRICE.toLocaleString()}
-                                    </>
-                                )}
-                            </button>
+                                        <div className="relative z-10">
+                                            <div className="flex justify-between items-start mb-8 border-b border-white/10 pb-8">
+                                                <div>
+                                                    <div className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-1">Service</div>
+                                                    <div className="font-serif text-xl font-bold">{selectedType?.name}</div>
+                                                </div>
+                                                <div className="bg-white/10 px-3 py-1 rounded-lg text-sm font-bold backdrop-blur-md">
+                                                    {selectedType?.duration}
+                                                </div>
+                                            </div>
 
-                            <div className="mt-8 flex items-center justify-center gap-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                <div className="flex items-center gap-2">
-                                    <Icon icon="ph:shield-check-fill" className="text-green-500 text-base" />
-                                    SSL Encrypted
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Icon icon="ph:certificate-fill" className="text-amber-500 text-base" />
-                                    Verified Experts
+                                            <div className="space-y-4 mb-8">
+                                                <div className="flex justify-between items-center text-sm">
+                                                    <span className="text-slate-400">Date</span>
+                                                    <span className="font-bold">{selectedDate ? formatFullDate(selectedDate) : '-'}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center text-sm">
+                                                    <span className="text-slate-400">Time</span>
+                                                    <span className="font-bold">{selectedTime}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center text-sm">
+                                                    <span className="text-slate-400">Platform</span>
+                                                    <span className="font-bold flex items-center gap-1"><Icon icon="ph:video-camera-fill" /> Google Meet</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex justify-between items-center pt-6 border-t border-white/10">
+                                                <span className="text-slate-400 font-medium">Total Amount</span>
+                                                <span className="text-3xl font-serif font-bold text-amber-400">₹ {CONSULTATION_PRICE.toLocaleString()}</span>
+                                            </div>
+
+                                            <button
+                                                onClick={handlePayment}
+                                                disabled={isLoading}
+                                                className="w-full mt-8 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-amber-900/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:pointer-events-none"
+                                            >
+                                                {isLoading ? (
+                                                    <Icon icon="ph:spinner-gap-bold" className="animate-spin text-2xl" />
+                                                ) : (
+                                                    <>
+                                                        <Icon icon="ph:credit-card-fill" className="text-xl" />
+                                                        Complete Payment
+                                                    </>
+                                                )}
+                                            </button>
+
+                                            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500 font-medium">
+                                                <Icon icon="ph:lock-key-fill" />
+                                                SECURE CHECKOUT
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
@@ -617,50 +602,29 @@ const BookConsultancy = () => {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-center"
+                            className="text-center py-10"
                         >
-                            <div className="w-28 h-28 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-                                <Icon icon="ph:check-circle-fill" className="text-green-500 text-7xl" />
+                            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner ring-8 ring-green-50">
+                                <Icon icon="ph:check-circle-fill" className="text-green-600 text-5xl" />
                             </div>
-                            <h2 className="text-3xl font-serif font-bold text-slate-800 mb-4">Cosmic Connection Confirmed!</h2>
-                            <p className="text-slate-500 mb-10 max-w-md mx-auto text-lg">
-                                Your payment was successful. We've sent a calendar invite. Please confirm it to finalize your session.
+                            <h2 className="text-3xl md:text-4xl font-serif font-black text-slate-900 mb-4">Booking Confirmed!</h2>
+                            <p className="text-slate-500 mb-10 max-w-md mx-auto text-lg leading-relaxed">
+                                We've sent the meeting link and details to your email. Get ready for your cosmic clarity session.
                             </p>
-                            <div className="glass-panel border border-slate-100 rounded-3xl p-8 mb-10 text-left max-w-md mx-auto shadow-xl">
-                                <div className="space-y-5">
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedType?.color} flex items-center justify-center shadow-lg`}>
-                                            <Icon icon={selectedType?.icon} className="text-white text-2xl" />
-                                        </div>
-                                        <span className="text-xl font-serif font-bold text-slate-800">{selectedType?.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-4 border-t border-slate-100 pt-5">
-                                        <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
-                                            <Icon icon="ph:calendar-bold" className="text-amber-600 text-xl" />
-                                        </div>
-                                        <span className="font-bold text-slate-700">{selectedDate && formatFullDate(selectedDate)}</span>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
-                                            <Icon icon="ph:clock-bold" className="text-amber-600 text-xl" />
-                                        </div>
-                                        <span className="font-bold text-slate-700">{selectedTime}</span>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <a
                                     href={createGoogleCalendarLink()}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="btn-gold px-10 py-4 flex items-center gap-3"
+                                    className="bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-slate-200"
                                 >
                                     <Icon icon="ph:calendar-plus-fill" className="text-xl" />
                                     Add to Calendar
                                 </a>
                                 <button
                                     onClick={() => navigate('/')}
-                                    className="px-10 py-4 rounded-full font-bold border-2 border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-600 transition-all bg-white"
+                                    className="bg-white border-2 border-slate-100 text-slate-600 px-8 py-4 rounded-xl font-bold hover:border-slate-300 transition-all"
                                 >
                                     Back to Home
                                 </button>
