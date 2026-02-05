@@ -1,11 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# MongoDB Connection URL from environment variable
 import certifi
+from dotenv import load_dotenv
 
 # MongoDB Connection URL from environment variable
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
