@@ -22,8 +22,8 @@ const Hero = () => {
     };
 
     return (
-        <section className="relative min-h-[85vh] flex items-center overflow-hidden px-6 md:px-12 lg:px-20 pt-24 lg:pt-0 pb-12 lg:pb-8">
-            <div className="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+        <section className="relative min-h-[85vh] flex items-center overflow-hidden px-6 md:px-12 lg:px-20 pt-24 lg:pt-0 pb-12 lg:pb-8 mt-20">
+            <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
                 <motion.div
                     className="flex-1 max-w-full lg:max-w-xl text-center lg:text-left z-10"
                     initial="hidden"

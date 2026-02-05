@@ -135,15 +135,24 @@ const Pricing = () => {
 
 
     return (
-        <section className="flex flex-col justify-center py-12 px-6 md:px-20 bg-white/40 backdrop-blur-md text-slate-900 text-center relative z-10">
+        <section className="relative py-24 px-6 md:px-20 overflow-hidden">
+            {/* Background Atmosphere */}
+            <div className="absolute inset-0 pointer-events-none z-[-1]">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-100/40 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-50/50 rounded-full blur-[100px]"></div>
+            </div>
+
             {/* Payment Status Toast */}
             {paymentStatus.show && (
-                <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slideDown ${paymentStatus.success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+                <div className={`fixed top-8 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 animate-slideDown backdrop-blur-md border ${paymentStatus.success ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800' : 'bg-red-50/90 border-red-200 text-red-800'
                     }`}>
                     <Icon icon={paymentStatus.success ? "ph:check-circle-fill" : "ph:warning-circle-fill"} className="text-2xl" />
-                    <span className="font-medium">{paymentStatus.message}</span>
-                    <button onClick={() => setPaymentStatus({ show: false, success: false, message: '' })} className="ml-2 hover:opacity-80">
-                        <Icon icon="ph:x" className="text-xl" />
+                    <div>
+                        <h4 className="font-bold text-sm uppercase tracking-wide">{paymentStatus.success ? 'Success' : 'Error'}</h4>
+                        <p className="text-sm font-medium">{paymentStatus.message}</p>
+                    </div>
+                    <button onClick={() => setPaymentStatus({ show: false, success: false, message: '' })} className="ml-2 hover:opacity-60 transition-opacity">
+                        <Icon icon="ph:x-bold" className="text-lg" />
                     </button>
                 </div>
             )}
@@ -153,82 +162,108 @@ const Pricing = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={container}
-                className="w-full max-w-7xl mx-auto"
+                className="max-w-7xl mx-auto"
             >
-                <div className="mb-16">
-                    <motion.h2 variants={item} className="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900">Premium Astrology Services</motion.h2>
-                    <motion.p variants={item} className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                        Invest in your destiny with our specialized reading packages.
+                {/* Header */}
+                <div className="text-center mb-20">
+                    <motion.div variants={item} className="inline-block mb-4">
+                        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-100 mb-4 mx-auto w-fit">
+                            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span className="text-xs font-bold text-amber-700 uppercase tracking-widest">Invest in Yourself</span>
+                        </div>
+                    </motion.div>
+                    <motion.h2 variants={item} className="text-5xl md:text-6xl font-serif font-black text-slate-900 mb-6 tracking-tight">
+                        Simple, Transparent <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">Pricing</span>
+                    </motion.h2>
+                    <motion.p variants={item} className="text-xl text-slate-600 font-light max-w-2xl mx-auto">
+                        Choose the perfect plan to unlock the mysteries of your financial and personal destiny.
                     </motion.p>
                 </div>
 
-                <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" variants={container}>
-                    {plans.map((plan) => (
+                <motion.div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start max-w-6xl mx-auto" variants={container}>
+                    {plans.map((plan, idx) => (
                         <motion.div
                             key={plan.name}
-                            className={`relative bg-white rounded-3xl p-6 md:p-10 transition-all duration-300 flex flex-col text-left h-full group ${plan.locked
-                                ? 'opacity-75 cursor-not-allowed'
-                                : 'hover:-translate-y-2 hover:shadow-xl'
-                                } ${plan.popular
-                                    ? 'border-2 border-amber-600 shadow-2xl shadow-amber-500/10 scale-100 lg:scale-105 z-10'
-                                    : 'border border-slate-200 hover:border-amber-400'
-                                }`}
+                            className={`relative group rounded-[1.5rem] p-6 transition-all duration-500 ${plan.popular
+                                ? 'bg-slate-900 text-white shadow-2xl shadow-amber-900/20 scale-105 z-10 ring-1 ring-white/10'
+                                : 'bg-white/80 backdrop-blur-lg border border-slate-100 text-slate-900 hover:shadow-xl hover:shadow-slate-200/50 hover:border-amber-200/50 hover:-translate-y-2'
+                                } ${plan.locked ? 'opacity-90' : ''}`}
                             variants={item}
                         >
-                            {/* Coming Soon Overlay */}
-                            {plan.comingSoon && (
-                                <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center z-20">
-                                    <Icon icon="ph:lock-fill" className="text-6xl text-amber-400 mb-4" />
-                                    <span className="text-2xl font-bold text-white mb-2">Coming Soon</span>
-                                    <span className="text-sm text-slate-300">This feature will be available soon!</span>
+                            {/* Popular Badge */}
+                            {plan.popular && (
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                    <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-amber-500/30 ring-4 ring-white dark:ring-slate-900">
+                                        Most Popular
+                                    </span>
                                 </div>
                             )}
 
-                            {plan.popular && (
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-700 text-white px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider shadow-md">
-                                    Most Popular
+                            {/* Locked Badge */}
+                            {plan.comingSoon && (
+                                <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px] rounded-[1.5rem] z-20 flex items-center justify-center">
+                                    <div className="bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-xl shadow-xl flex items-center gap-3 border border-white">
+                                        <Icon icon="ph:lock-key-fill" className="text-amber-500 text-xl" />
+                                        <div>
+                                            <div className="text-slate-900 font-bold text-xs uppercase tracking-wider">Coming Soon</div>
+                                            <div className="text-slate-500 text-[10px]">Join the waitlist</div>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
-                            <div className={`text-center border-b border-slate-100 pb-8 mb-8 ${plan.popular ? 'mt-2' : ''}`}>
-                                <Icon icon={plan.icon} className={`text-5xl mb-4 mx-auto transition-transform ${plan.popular ? 'text-amber-600' : 'text-amber-500 group-hover:scale-110'}`} />
-                                <h3 className="text-xl font-bold text-slate-800 mb-4">{plan.name}</h3>
-                                <div className="text-4xl font-black text-slate-900 font-display mb-2">
-                                    ₹ {plan.price.toLocaleString()}<span className="text-sm font-medium text-slate-500 ml-1">{plan.period}</span>
+
+                            {/* Card Header */}
+                            <div className="mb-6 text-center relative">
+                                <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-4 text-2xl shadow-lg transition-transform group-hover:scale-110 duration-500 ${plan.popular ? 'bg-white/10 text-amber-400 ring-1 ring-white/20' : 'bg-amber-50 text-amber-600'}`}>
+                                    <Icon icon={plan.icon} />
                                 </div>
-                                <p className="text-slate-500 text-sm leading-relaxed">{plan.description}</p>
+                                <h3 className={`text-xl font-serif font-bold mb-1 ${plan.popular ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
+                                <div className="flex items-end justify-center gap-1 mb-3">
+                                    <span className={`text-4xl font-bold tracking-tight ${plan.popular ? 'text-white' : 'text-slate-900'}`}>
+                                        ₹{plan.price.toLocaleString()}
+                                    </span>
+                                    <span className={`text-sm font-medium mb-1 ${plan.popular ? 'text-slate-400' : 'text-slate-400'}`}>
+                                        {plan.period}
+                                    </span>
+                                </div>
+                                <p className={`text-xs ${plan.popular ? 'text-slate-300' : 'text-slate-500'} font-light px-2 leading-relaxed`}>
+                                    {plan.description}
+                                </p>
                             </div>
-                            <ul className="space-y-4 mb-8 flex-1">
+
+                            {/* Divider with gradient */}
+                            <div className={`h-px w-full bg-gradient-to-r from-transparent via-current to-transparent opacity-20 mb-6 ${plan.popular ? 'text-white' : 'text-slate-300'}`}></div>
+
+                            {/* Features */}
+                            <ul className="space-y-3 mb-8">
                                 {plan.features.map((feature, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-slate-600 text-sm font-medium">
-                                        <Icon icon={plan.locked ? "ph:clock-fill" : "ph:check-circle-fill"} className={`text-xl flex-shrink-0 ${plan.locked ? 'text-slate-400' : 'text-green-600'}`} />
-                                        {feature}
+                                    <li key={i} className={`flex items-start gap-2.5 text-xs font-medium ${plan.popular ? 'text-slate-200' : 'text-slate-600'}`}>
+                                        <Icon icon="ph:check-circle-fill" className={`text-base flex-shrink-0 ${plan.popular ? 'text-amber-400' : 'text-amber-500'}`} />
+                                        <span className="leading-snug">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
+
+                            {/* Action Button */}
                             <button
                                 onClick={() => !plan.locked && handlePayment(plan.price, plan.name)}
                                 disabled={loadingPlan !== null || plan.locked}
-                                className={`w-full py-3 rounded-full font-semibold transition-all flex items-center justify-center gap-2 disabled:cursor-not-allowed ${plan.locked
-                                    ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                                className={`w-full py-3 rounded-lg font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 ${plan.locked
+                                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
                                     : plan.popular
-                                        ? 'bg-gradient-to-r from-amber-500 to-amber-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5'
-                                        : 'border-2 border-slate-200 text-slate-600 hover:border-amber-500 hover:text-amber-500 bg-transparent'
+                                        ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:brightness-110 active:scale-[0.98]'
+                                        : 'bg-slate-900 text-white shadow-lg hover:bg-slate-800 hover:shadow-xl active:scale-[0.98]'
                                     }`}
                             >
-                                {plan.locked ? (
+                                {loadingPlan === plan.name ? (
                                     <>
-                                        <Icon icon="ph:lock-simple-fill" className="text-xl" />
-                                        <span>Available Soon</span>
-                                    </>
-                                ) : loadingPlan === plan.name ? (
-                                    <>
-                                        <Icon icon="ph:circle-notch" className="text-xl animate-spin" />
+                                        <Icon icon="ph:circle-notch-bold" className="text-lg animate-spin" />
                                         <span>Processing...</span>
                                     </>
                                 ) : (
                                     <>
-                                        <Icon icon="ph:credit-card" className="text-xl" />
-                                        <span>Choose Plan</span>
+                                        <span>{plan.locked ? 'Coming Soon' : 'Get Started'}</span>
+                                        {!plan.locked && <Icon icon="ph:arrow-right-bold" />}
                                     </>
                                 )}
                             </button>
@@ -236,32 +271,25 @@ const Pricing = () => {
                     ))}
                 </motion.div>
 
-
-                {/* Security Badge */}
-                <motion.div variants={item} className="mt-12 flex items-center justify-center gap-6 text-slate-400 text-sm">
-                    <div className="flex items-center gap-2">
-                        <Icon icon="ph:shield-check-fill" className="text-green-500 text-xl" />
-                        <span>Secure Payment</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Icon icon="ph:lock-fill" className="text-green-500 text-xl" />
-                        <span>SSL Encrypted</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Icon icon="ph:credit-card-fill" className="text-green-500 text-xl" />
-                        <span>Razorpay Protected</span>
-                    </div>
+                {/* Trust Badges */}
+                <motion.div variants={item} className="mt-20 pt-10 border-t border-slate-200 flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-60 hover:opacity-100 transition-opacity">
+                    {['256-bit SSL Encryption', 'Secure Payment Gateways', 'Instant Access', 'Money-back Guarantee'].map((text, i) => (
+                        <div key={i} className="flex items-center gap-2 text-slate-500 text-sm font-semibold uppercase tracking-wider">
+                            <Icon icon="ph:shield-check-fill" className="text-amber-500 text-lg" />
+                            {text}
+                        </div>
+                    ))}
                 </motion.div>
             </motion.div>
 
-            {/* CSS for animations */}
+            {/* CSS for custom animations */}
             <style>{`
                 @keyframes slideDown {
                     from { opacity: 0; transform: translate(-50%, -20px); }
                     to { opacity: 1; transform: translate(-50%, 0); }
                 }
                 .animate-slideDown {
-                    animation: slideDown 0.3s ease-out;
+                    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 }
             `}</style>
         </section>
