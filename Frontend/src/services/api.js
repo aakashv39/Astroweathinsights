@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:8000'
-    : 'https://astroweathinsights-production.up.railway.app';
+
+const API_URL = 'http://127.0.0.1:8000';
 
 console.log('API URL set to:', API_URL);
 
@@ -88,6 +87,12 @@ export const verifyPayment = async (data) => {
 
 export const submitConsultation = async (data) => {
     const response = await api.post('/consultation', data);
+    return response.data;
+};
+
+
+export const sendChatbotMessage = async (message) => {
+    const response = await api.post('/chat', { query: message });
     return response.data;
 };
 

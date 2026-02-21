@@ -6,8 +6,10 @@ import Features from './components/Features';
 import Services from './components/Services';
 import Pricing from './components/Pricing';
 import Footer from './components/Footer';
+
 import ConsultationForm from './components/ConsultationForm';
 import BookConsultancy from './components/BookConsultancy';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path="/book-consultancy" element={<BookConsultancy />} />
         </Routes>
         <Footer />
+        <Chatbot />
       </div>
     </Router>
   );

@@ -8,6 +8,7 @@ import os
 
 import schemas, auth, payment, database
 
+
 app = FastAPI()
 
 # CORS Origins - Allow specific origins for security
@@ -33,11 +34,34 @@ origins = [
     "https://astroweathinsights-production.up.railway.app",
 ]
 
-# Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,  # Allow credentials for JWT tokens
+    allow_methods=["*"] ,
+    allow_headers=["*"]
+)
+
+@app.post("/chat")
+async def chatbot_endpoint(request: Request):
+    try:
+        data = await request.json()
+        print("Received /chat request:", data)
+        user_message = data.get("query", "")
+        # Example: Replace with real logic or ML model
+        if "love" in user_message.lower():
+            reply = "Love is in the stars! 💫"
+        elif "career" in user_message.lower():
+            reply = "Your career path looks promising."
+        elif "health" in user_message.lower():
+            reply = "Focus on balance and wellness."
+        else:
+            reply = "Ask me anything about astrology, love, career, or health!"
+        return {"reply": reply}
+    except Exception as e:
+        print("Error in /chat endpoint:", e)
+        print(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=str(e))
     allow_methods=["*"],
     allow_headers=["*"],
 )
