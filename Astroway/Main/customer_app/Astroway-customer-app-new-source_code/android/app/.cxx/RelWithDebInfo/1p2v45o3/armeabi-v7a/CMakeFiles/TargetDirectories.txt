@@ -1,0 +1,2 @@
+C:/DiployStudio/astroway-pro-user/android/app/.cxx/RelWithDebInfo/1p2v45o3/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/DiployStudio/astroway-pro-user/android/app/.cxx/RelWithDebInfo/1p2v45o3/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+./ios/Pods/AgoraRtm_iOS/AgoraRtmKit.xcframework/ios-arm64_i386_x86_64-simulator/AgoraRtmKit.framework/AgoraRtmKit
+./ios/Pods/AgoraRtm_iOS/AgoraRtmKit.xcframework/ios-arm64_armv7/AgoraRtmKit.framework/AgoraRtmKit

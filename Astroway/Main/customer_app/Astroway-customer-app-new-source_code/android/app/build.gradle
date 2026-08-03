@@ -1,0 +1,120 @@
+buildscript {
+    dependencies {
+        classpath("com.android.tools:r8:8.5.35")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.10"
+
+    }
+}
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '14'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '2.0.2'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+   keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    compileSdkVersion 36
+    packagingOptions {
+        pickFirst 'lib/**/libaosl.so'
+    }
+
+kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_17.toString()
+}
+ 
+    compileOptions {
+       sourceCompatibility = JavaVersion.VERSION_17
+       targetCompatibility = JavaVersion.VERSION_17
+       coreLibraryDesugaringEnabled true
+    }
+    ndkVersion "29.0.14033849"
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        applicationId "com.astrowaydiploy.user"
+        minSdkVersion 24
+        targetSdkVersion 36
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a"
+//           abiFilters "arm64-v8a"
+          // "armeabi-v7a"
+           //,"arm64-v8a"
+           //,"x86","x86_64"
+      }
+    }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), ' proguard-rules.pro'
+        }
+    }
+    namespace 'com.astrowaydiploy.user'
+    lint {
+        checkReleaseBuilds false
+        disable 'InvalidPackage'
+    }
+
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    api 'io.agora.infra:aosl:1.2.13'
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation 'com.google.code.gson:gson:2.10.1' // Add this line
+    implementation 'com.google.firebase:firebase-auth'
+    implementation("com.google.firebase:firebase-firestore")
+    implementation ('com.android.support:multidex:2.0.1') {
+        exclude module: "play-services-safetynet"
+    }
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+    implementation 'com.google.firebase:firebase-messaging:23.4.0'
+    implementation 'com.onesignal:OneSignal:[5.0.0, 5.99.99]'
+}

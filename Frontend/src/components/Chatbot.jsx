@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import './Chatbot.css';
 import { sendChatbotMessage } from '../services/api';
 
-
 const Chatbot = () => {
   const [messages, setMessages] = useState([
     { sender: 'bot', text: 'Hi! How can I help you with astrology insights today?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [minimized, setMinimized] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -35,10 +34,10 @@ const Chatbot = () => {
     setLoading(false);
   };
 
-  if (minimized) {
+  if (!isOpen) {
     return (
       <div className="chatbot-container chatbot-minimized">
-        <button className="chatbot-cross-btn" onClick={() => setMinimized(false)} title="Open chatbot">💬</button>
+        <button className="chatbot-cross-btn" onClick={() => setIsOpen(true)} title="Open chatbot">💬</button>
       </div>
     );
   }
@@ -47,7 +46,7 @@ const Chatbot = () => {
     <div className="chatbot-container chatbot-large">
       <div className="chatbot-header text-gold-gradient">
         <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Astro Chatbot</span>
-        <button className="chatbot-cross-btn" onClick={() => setMinimized(true)} title="Minimize chatbot">✕</button>
+        <button className="chatbot-cross-btn" onClick={() => setIsOpen(false)} title="Close chatbot">✕</button>
       </div>
       <div className="chatbot-messages">
         {messages.map((msg, idx) => (

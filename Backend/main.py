@@ -12,7 +12,7 @@ import schemas, auth, payment, database
 app = FastAPI()
 
 # CORS Origins - Allow specific origins for security
-origins = [
+default_origins = [
     "https://astrotechwealth.vercel.app",
     "https://www.astrotechwealth.vercel.app",
     "https://astrotechwealth.com",
@@ -33,6 +33,8 @@ origins = [
     "http://127.0.0.1:5175",
     "https://astroweathinsights-production.up.railway.app",
 ]
+origins = os.getenv("CORS_ORIGINS", ",".join(default_origins)).split(",")
+origins = [origin.strip() for origin in origins if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,9 +64,6 @@ async def chatbot_endpoint(request: Request):
         print("Error in /chat endpoint:", e)
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Global exception handler to ensure CORS headers are always sent
 @app.exception_handler(Exception)

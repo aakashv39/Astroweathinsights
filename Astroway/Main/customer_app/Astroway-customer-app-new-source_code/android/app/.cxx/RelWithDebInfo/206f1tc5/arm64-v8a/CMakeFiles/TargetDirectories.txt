@@ -1,0 +1,2 @@
+/Users/karanbisht/Documents/GitHub/astroway-pro-user/android/app/.cxx/RelWithDebInfo/206f1tc5/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/karanbisht/Documents/GitHub/astroway-pro-user/android/app/.cxx/RelWithDebInfo/206f1tc5/arm64-v8a/CMakeFiles/rebuild_cache.dir

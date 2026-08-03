@@ -1,0 +1,2 @@
+/Users/sunilsingh/Desktop/diploy workspace/astroway-pro-user/android/app/.cxx/RelWithDebInfo/6u3m1n29/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/sunilsingh/Desktop/diploy workspace/astroway-pro-user/android/app/.cxx/RelWithDebInfo/6u3m1n29/armeabi-v7a/CMakeFiles/rebuild_cache.dir

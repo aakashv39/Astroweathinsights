@@ -1,0 +1,4 @@
+swisseph
+pytz
+fastapi
+uvicorn
