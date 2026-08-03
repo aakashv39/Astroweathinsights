@@ -86,26 +86,61 @@ const Navbar = () => {
     setShowAuthModal(true);
   };
 
+  const menuItems = [
+    { label: 'Kundali', icon: 'ph:squares-four-fill', href: '/#services', route: null },
+    { label: 'Panchang', icon: 'ph:sun-fill', href: null, route: '/panchang' },
+    { label: 'Muhurat', icon: 'ph:hourglass-medium-fill', href: null, route: '/panchang?tab=muhurat' },
+    { label: 'Puja', icon: 'ph:flower-lotus-fill', href: '/#astro-hub', route: null },
+    { label: 'Reports', icon: 'ph:file-text-fill', href: '/#pricing', route: null },
+    { label: 'Horoscope', icon: 'ph:moon-stars-fill', href: '/#features', route: null },
+    { label: 'Shop', icon: 'ph:shopping-bag-fill', href: '/#astro-hub', route: null },
+    { label: 'Blog', icon: 'ph:feather-fill', href: '/#footer', route: null },
+  ];
+
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-[999] px-6 md:px-12 py-4 bg-white/90 backdrop-blur-md border-b border-amber-100/50 shadow-sm transition-all duration-300">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <Link to="/" className="font-serif font-black text-2xl text-slate-900 tracking-tight flex items-center gap-2 no-underline group">
+      <nav className="fixed top-0 left-0 w-full z-[999] px-4 md:px-8 py-3 bg-white/90 backdrop-blur-md border-b border-amber-100/50 shadow-sm transition-all duration-300">
+        <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
+          <Link to="/" className="font-serif font-black text-2xl text-slate-900 tracking-tight flex items-center gap-2 no-underline group shrink-0">
+            <span className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-white grid place-items-center shadow-md shadow-amber-500/30">
+              <Icon icon="ph:sparkle-fill" className="text-lg" />
+            </span>
             <span>AstroTech<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700">Wealth</span></span>
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex gap-8 items-center bg-white/50 px-6 py-2 rounded-full border border-white/50 shadow-sm backdrop-blur-sm">
-            <Link to="/" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-amber-600 transition-colors">Home</Link>
-            <a href="#services" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-amber-600 transition-colors">Services</a>
-            <Link to="/book-consultancy" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-amber-600 transition-colors flex items-center gap-1">
-              Consultancy
-            </Link>
+          <div className="hidden lg:flex items-center gap-1 bg-white/70 px-3 py-1.5 rounded-full border border-amber-100 shadow-sm backdrop-blur-sm flex-1 justify-center">
+            {menuItems.map((item) => (
+              item.route ? (
+                <Link
+                  key={item.label}
+                  to={item.route}
+                  className="text-sm font-semibold text-slate-700 hover:text-amber-700 transition-colors px-2.5 py-1.5 rounded-full hover:bg-amber-50 flex items-center gap-1.5 no-underline"
+                >
+                  <Icon icon={item.icon} className="text-amber-600 text-base" />
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-sm font-semibold text-slate-700 hover:text-amber-700 transition-colors px-2.5 py-1.5 rounded-full hover:bg-amber-50 flex items-center gap-1.5 no-underline"
+                >
+                  <Icon icon={item.icon} className="text-amber-600 text-base" />
+                  {item.label}
+                </a>
+              )
+            ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3 shrink-0">
+            <select className="border border-slate-200 bg-white rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500">
+              <option>English</option>
+              <option>Hindi</option>
+            </select>
+
             {user ? (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-slate-50 border border-slate-100">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xs font-bold shadow-sm">
                     {user.full_name ? user.full_name.charAt(0).toUpperCase() : 'U'}
@@ -119,16 +154,12 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => openAuthModal('login')}
-                className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
+                className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-amber-300/50 flex items-center gap-2"
               >
+                <Icon icon="ph:user-circle-fill" className="text-base" />
                 Sign In
               </button>
             )}
-
-            <Link to="/get-started" className="bg-gradient-to-r from-amber-500 to-amber-700 text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-amber-200 no-underline flex items-center gap-2 group">
-              Get Started
-              <Icon icon="ph:arrow-right-bold" className="group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -139,19 +170,43 @@ const Navbar = () => {
 
         {/* Mobile Menu Content */}
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 flex flex-col gap-4 shadow-xl animate-fadeIn h-screen z-[998]">
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 flex flex-col gap-4 shadow-xl animate-fadeIn h-screen z-[998] overflow-y-auto">
             <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-700 font-bold transition-all">
               <Icon icon="ph:house-bold" className="mr-3 text-lg" />
               Home
             </Link>
-            <a href="#services" onClick={() => setIsOpen(false)} className="flex items-center p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-700 font-bold transition-all">
-              <Icon icon="ph:star-four-bold" className="mr-3 text-lg" />
-              Services
-            </a>
-            <Link to="/book-consultancy" onClick={() => setIsOpen(false)} className="flex items-center p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-700 font-bold transition-all">
-              <Icon icon="ph:video-camera-bold" className="mr-3 text-lg" />
-              Consultancy
-            </Link>
+
+            {menuItems.map((item) => (
+              item.route ? (
+                <Link
+                  key={item.label}
+                  to={item.route}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-700 font-bold transition-all"
+                >
+                  <Icon icon={item.icon} className="mr-3 text-lg" />
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center p-3 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-700 font-bold transition-all"
+                >
+                  <Icon icon={item.icon} className="mr-3 text-lg" />
+                  {item.label}
+                </a>
+              )
+            ))}
+
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-1">Language</label>
+              <select className="w-full border border-slate-200 bg-white rounded-lg px-3 py-2 text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                <option>English</option>
+                <option>Hindi</option>
+              </select>
+            </div>
 
             <div className="h-px bg-slate-100 my-2"></div>
 

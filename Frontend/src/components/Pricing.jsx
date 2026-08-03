@@ -135,7 +135,7 @@ const Pricing = () => {
 
 
     return (
-        <section className="relative py-24 px-6 md:px-20 overflow-hidden">
+        <section id="pricing" className="relative py-24 px-6 md:px-20 overflow-hidden">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 pointer-events-none z-[-1]">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-100/40 rounded-full blur-[120px]"></div>

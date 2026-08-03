@@ -1,13 +1,21 @@
 import axios from 'axios';
 
-
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const PANCHANG_API_URL = import.meta.env.VITE_PANCHANG_API_URL || '/panchang-api';
 
 console.log('API URL set to:', API_URL);
 
 const api = axios.create({
     baseURL: API_URL,
     timeout: 60000, // 60 second timeout for very cold starts
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+const panchangApi = axios.create({
+    baseURL: PANCHANG_API_URL,
+    timeout: 60000,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -100,6 +108,16 @@ export const generateReport = async (data) => {
     const response = await api.post('/generate-report', data, {
         responseType: 'blob' // Important for PDF
     });
+    return response.data;
+};
+
+export const getPanchangSnapshot = async (payload) => {
+    const response = await panchangApi.post('/api/muhurat/panchang-snapshot', payload);
+    return response.data;
+};
+
+export const getActivityMuhurat = async (payload) => {
+    const response = await panchangApi.post('/api/muhurat/activity-evaluate', payload);
     return response.data;
 };
 

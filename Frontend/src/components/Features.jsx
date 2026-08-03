@@ -21,7 +21,7 @@ const Features = () => {
     const [selectedSign, setSelectedSign] = useState(null);
 
     return (
-        <section className="relative py-24 px-6 md:px-20 overflow-hidden">
+        <section id="features" className="relative py-24 px-6 md:px-20 overflow-hidden">
             {/* Background elements */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[-1] opacity-30">
                 <div className="absolute top-20 left-[10%] w-[300px] h-[300px] bg-amber-200/20 rounded-full blur-[80px]"></div>
